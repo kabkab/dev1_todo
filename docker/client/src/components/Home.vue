@@ -39,7 +39,7 @@ export default {
   },
 
   methods: {
-    //
+    //add new todo
     SaveTodo(todo){
       this.CheckForm(todo)
       console.log(this.formerrs)
@@ -64,6 +64,7 @@ export default {
     reset: function(obj){
       obj.assign(this.$data,initialState())
     },
+    //check for new todo registration
     CheckForm: function(obj){
       this.formerrs = [];
       console.log(obj)
