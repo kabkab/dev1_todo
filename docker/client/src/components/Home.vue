@@ -2,6 +2,13 @@
   <div class='hello'>
     <h1>{{ title }}</h1>
     <h3>Todo</h3>
+
+    <p v-if="formerrs.length">
+      <ul>
+        <li v-for="formerr in formerrs">{{formerr}}</li>
+      </ul>
+    </p>
+
     <textarea v-model="todo.desc" @keydown.enter="SaveTodo(todo)" placeholder="textarea todo detail"></textarea>
     <button @click="SaveTodo(todo)">save</button>
     <h3>List of ToDos</h3>
@@ -20,10 +27,10 @@ export default {
     return {
       title: 'Welcome to my first todo app',
       todo: {
-        'id':'',
         'desc':''
       },
-      todos: []
+      todos: [],
+      formerrs: []
     }
   },
 
@@ -32,8 +39,10 @@ export default {
   },
 
   methods: {
-    //
+    //add new todo
     SaveTodo(todo){
+      this.CheckForm(todo)
+      console.log(this.formerrs)
       this.todos.push(todo)
       this.todo = {
         'id':'',
@@ -54,6 +63,14 @@ export default {
     },
     reset: function(obj){
       obj.assign(this.$data,initialState())
+    },
+    //check for new todo registration
+    CheckForm: function(obj){
+      this.formerrs = [];
+      console.log(obj)
+      if(!obj.desc){
+        this.formerrs.push('please input todo description');
+      }
     }
   }
 }
