@@ -9,7 +9,7 @@
       </ul>
     </p>
 
-    <textarea v-model="todo.desc" @keydown.enter="SaveTodo(todo)" placeholder="textarea todo detail"></textarea>
+    <textarea v-model="todo.desc" @keydown.enter.prevent.default="SaveTodo(todo)" placeholder="textarea todo detail"></textarea>
     <button @click="SaveTodo(todo)">save</button>
     <h3>List of ToDos</h3>
     <ul v-for="todo in todos" v-model="todos">
@@ -33,21 +33,21 @@ export default {
       formerrs: []
     }
   },
-
   created() {
     this.GetTodos()
   },
-
   methods: {
     //add new todo
     SaveTodo(todo){
       this.CheckForm(todo)
-      console.log(this.formerrs)
+      console.log(this.formerrs.length)
+      if(this.formerrs.length > 0){
+      }else{
       this.todos.push(todo)
       this.todo = {
-        'id':'',
         'desc':''
         }
+      }
     },
     GetTodos(){
       this.todos = [
@@ -55,7 +55,6 @@ export default {
     },
     UpdateTodo(id){
       console.log(id)
-
     },
     DeleteTodo(todo){
       this.todos.splice(this.todos.indexOf(todo), 1)
