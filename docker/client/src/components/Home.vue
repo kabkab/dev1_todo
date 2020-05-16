@@ -9,26 +9,35 @@
       </ul>
     </p>
 
-    <h5>description</h5>
-    <textarea v-model="todo.desc" @keydown.enter.prevent.default="SaveTodo(todo)" placeholder="textarea todo detail"></textarea>
+    <v-textarea v-model="todo.desc" @keydown.enter.prevent.default="SaveTodo(todo)" label="description" class="ms-2" rows="1"></v-textarea>
     <h5>tags</h5>
-    <input type="text" v-model="tag">
-    <button @click="createTag(tag)">create tag</button>
     <ul>
       <li v-for="deftag in deftags"><input type="checkbox" v-bind:id="deftag" v-bind:value="deftag" v-model="todo.tags">{{deftag}}</li>
     </ul>
-    <button @click="SaveTodo(todo)">save todo</button>
+    <v-text-field type="text" v-model="tag" label="input tag"></v-text-field>
+    <v-btn @click="createTag(tag)">create tag</v-btn>
+
+    <v-btn @click="SaveTodo(todo)">save todo</v-btn>
     
-    <h3>List of ToDos</h3>
-    
-    <ul v-for="todo in todos" v-model="todos">
-      <li><textarea v-model="todo.desc">{{todo.desc}}</textarea></li>
-      <ul>
-        <li v-for="tag in todo.tags">{{tag}}</li>
-      </ul>
-      <button @click="UpdateTodo(todo)">update</button>
-      <button @click="DeleteTodo(todo)">delete</button>
-    </ul>
+    <h3>List of Todos</h3>
+    <p v-if="todos.length === 0">
+      <h5>no todos</h5>
+    </p>
+
+    <v-container>
+      <v-row class="ms-2" >
+        <v-col v-for="todo in todos" v-model="todos">
+          <v-card class="pa-2" title outlined>
+            <v-textarea v-model="todo.desc" label="description" rows="2"></v-textarea>
+            <ul>
+              <li v-for="tag in todo.tags">{{tag}}</li>
+            </ul>
+          <v-btn @click="UpdateTodo(todo)">update</v-btn>
+          <v-btn @click="DeleteTodo(todo)">delete</v-btn>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -99,6 +108,7 @@ h1, h2 {
 ul {
   list-style-type: none;
   padding: 0;
+  margin: auto;
 }
 li {
   display: inline-block;
